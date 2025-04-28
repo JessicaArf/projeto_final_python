@@ -12,7 +12,7 @@ sobrenomes = ["Silva", "Oliveira", "Santos", "Pereira", "Costa", "Souza", "Almei
 def gerar_nome_usuario():
     nome = random.choice(nomes)
     sobrenome = random.choice(sobrenomes)
-    numero = random.randint(1, 999) 
+    numero = random.randint(1, 9999) 
     return f"{nome}{sobrenome}{numero}"
 
 # função para criar um email aleatório
@@ -24,7 +24,6 @@ def gerar_email(nome_usuario):
 # função para criar o usuário
 def criar_usuario():
     try:
-
         nome_usuario = gerar_nome_usuario()
         email_usuario = gerar_email(nome_usuario)
 
