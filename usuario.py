@@ -33,7 +33,7 @@ def criar_usuario():
         "email": email_usuario,
         "password": "123456786",
         "phone": "12345678901",
-        "address": "123 Main St, City, Country",
+        "address": "Rua Aparecida, Centro, São Paulo, SP",
         "cpf": "003.456.999-00"
     }
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
