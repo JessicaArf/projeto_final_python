@@ -20,12 +20,17 @@ def gerar_email(nome_usuario):
     nome_usuario = nome_usuario.lower() #deixa tudo em minúsculo
     return f"{nome_usuario}@email.com"
 
+# função para criar um cpf aleatório
+def gerar_cpf():
+    numeros = [random.randint(0, 9) for _ in range(11)]  # Gera 11 dígitos aleatórios
+    return f"{numeros[0]}{numeros[1]}{numeros[2]}.{numeros[3]}{numeros[4]}{numeros[5]}.{numeros[6]}{numeros[7]}{numeros[8]}-{numeros[9]}{numeros[10]}"
 
 # função para criar o usuário
 def criar_usuario():
     try:
         nome_usuario = gerar_nome_usuario()
         email_usuario = gerar_email(nome_usuario)
+        cpf_usuario = gerar_cpf()
 
         dados_usuario = {
         "username": nome_usuario,
@@ -33,7 +38,7 @@ def criar_usuario():
         "password": "123456786",
         "phone": "12345678901",
         "address": "Rua Aparecida, Centro, São Paulo, SP",
-        "cpf": "003.456.999-00"
+        "cpf": cpf_usuario
     }
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
 
