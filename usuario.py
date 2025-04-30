@@ -60,5 +60,3 @@ def criar_usuario():
         print("Erro ao fazer requisição:", e)
 
 criar_usuario()
-
-

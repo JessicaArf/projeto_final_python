@@ -3,7 +3,7 @@ import requests
 
 # Variável do tipo constante pra guardar a url
 URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
-URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login"
+URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login/"
 
 # Lista de nomes e sobrenomes
 nomes = ["Lucas", "Maria", "João", "Ana", "Carlos", "Fernanda", "Paulo", "Julia", "Rafael", "Larissa"]
