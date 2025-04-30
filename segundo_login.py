@@ -3,7 +3,7 @@ import requests
 
 # Variável do tipo constante pra guardar a url
 URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
-URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login/"
+URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login"
 
 # Lista de nomes e sobrenomes
 nomes = ["Lucas", "Maria", "João", "Ana", "Carlos", "Fernanda", "Paulo", "Julia", "Rafael", "Larissa"]
@@ -53,13 +53,14 @@ def criar_usuario():
             # Volta o código para criar novo usuário como se fosse uma recursividade
             return criar_usuario()
 
+        global dados_usuario
         dados_usuario = {
-             "username": nome_usuario,
-             "email": email_usuario,
-             "password": "123456786",
-             "phone": "12345678901",
-             "address": "Rua Aparecida, Centro, São Paulo, SP",
-             "cpf": cpf_usuario
+            "username": "Lucassasfsmeida5740",
+            "email": "lucasdfsfaida5740@email.com",
+            "password": "123456786",
+            "phone": "12345678901",
+            "address": "Rua Aparecida, Centro, São Paulo, SP",
+            "cpf": "523.802.173-90"
         }
 
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
@@ -68,10 +69,6 @@ def criar_usuario():
         if resposta.ok:
             print("Usuário criado com sucesso!")
             print(resposta.json())
-            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
-            print("\n[Resposta da execução do Login]")
-            print(f"Status Code: {resposta_login.status_code}")
-            print(f"ResponseBody: {resposta_login.text}")
         else:
             print("Falha ao criar usuário.")
             print(resposta.json())
@@ -80,4 +77,7 @@ def criar_usuario():
 
 criar_usuario()
 
-
+resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
+print("\n[Resposta da execução do Login]")
+print(f"Status Code: {resposta_login.status_code}")
+print(f"ResponseBody: {resposta_login.request}")
