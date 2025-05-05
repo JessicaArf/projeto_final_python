@@ -1,7 +1,12 @@
-
+import os
 import random
 import requests
 import json
+from cpf_generator import CPF
+from dotenv import load_dotenv
+
+# Carrega variáveis do .env
+load_dotenv()
 
 # Variável do tipo constante pra guardar a url
 URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
@@ -20,13 +25,12 @@ def gerar_nome_usuario():
 
 # Função para criar um email aleatório
 def gerar_email(nome_usuario):
-    nome_usuario = nome_usuario.lower()  # deixa tudo em minúsculo
+    nome_usuario = nome_usuario.lower()  #deixa tudo em minúsculo
     return f"{nome_usuario}@email.com"
 
 # Função para criar um cpf aleatório
 def gerar_cpf():
-    numeros = [random.randint(0, 9) for _ in range(11)]  # Gera 11 dígitos aleatórios
-    return f"{numeros[0]}{numeros[1]}{numeros[2]}.{numeros[3]}{numeros[4]}{numeros[5]}.{numeros[6]}{numeros[7]}{numeros[8]}-{numeros[9]}{numeros[10]}"
+    return CPF.generate()
 
 # Função para criar o usuário
 def criar_usuario():
@@ -34,39 +38,55 @@ def criar_usuario():
         nome_usuario = gerar_nome_usuario()
         email_usuario = gerar_email(nome_usuario)
         cpf_usuario = gerar_cpf()
-        senha = "123456786"
+        senha = os.getenv("USER_PASSWORD")
+        telefone_usuario = "12345678901"
+        endereco_usuario = "Rua Aparecida, Centro, São Paulo, SP"
+
         dados_usuario = {
             "username": nome_usuario,
             "email": email_usuario,
             "password": senha,
-            "phone": "12345678901",
-            "address": "Rua Aparecida, Centro, São Paulo, SP",
+            "phone":telefone_usuario,
+            "address": endereco_usuario,
             "cpf": cpf_usuario
         }
+
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
         print("\n[Resposta da Criação do Usuário]")
         print(f"Status Code: {resposta.status_code}")
+
         if resposta.ok:
             print("Usuário criado com sucesso!")
             print(resposta.json())
-            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
-             # prints para ver durante a apresentação deve ser removido para entrega final.
-            print("\n[Resposta do Login]")
-            print(f"Status Code: {resposta_login.status_code}")
-            if resposta_login.ok:
-                print("Login efetuado com sucesso!")
-                print(resposta_login.json())
-                # Salva a resposta da requisição de login em um arquivo JSON
-                with open("login_response.json", "w") as arquivo:
-                    json.dump(resposta_login.json(), arquivo, indent=4)
-             # Validar se houve falha no login
-            else:
-                print("Falha ao efetuar login.")
-                print(resposta_login.json())
+            return dados_usuario 
+
         else:
             print("Falha ao criar usuário.")
             print(resposta.json())
+
     except requests.exceptions.RequestException as e:
         print("Erro ao fazer requisição:", e)
+        
 
-criar_usuario()
+def realizar_login(dados_usuario):
+    try:
+        resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
+        print("\n[Resposta do Login]")
+        print(f"Status Code: {resposta_login.status_code}")
+        print(resposta_login.json())
+
+        if resposta_login.ok:
+            print("Login efetuado com sucesso!")
+            with open("login_response.json", "w") as arquivo:
+                json.dump(resposta_login.json(), arquivo, indent=4)
+        else:
+            print("Falha ao efetuar login.")
+
+    except requests.exceptions.RequestException as e:
+        print("Erro ao fazer requisição de login:", e)
+
+
+# --- Execução principal ---
+dados = criar_usuario()
+if dados:
+    realizar_login(dados)
