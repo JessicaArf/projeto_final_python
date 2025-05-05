@@ -49,12 +49,7 @@ def criar_usuario():
         if resposta.ok:
             print("Usuário criado com sucesso!")
             print(resposta.json())
-            # Efetua o login com o mesmo usuário e senha
-            dados_login = {
-                "username": nome_usuario,
-                "password": senha
-            }
-            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_login)
+            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
              # prints para ver durante a apresentação deve ser removido para entrega final.
             print("\n[Resposta do Login]")
             print(f"Status Code: {resposta_login.status_code}")
