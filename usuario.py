@@ -1,5 +1,7 @@
+
 import random
 import requests
+import json
 
 # Variável do tipo constante pra guardar a url
 URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
@@ -32,27 +34,40 @@ def criar_usuario():
         nome_usuario = gerar_nome_usuario()
         email_usuario = gerar_email(nome_usuario)
         cpf_usuario = gerar_cpf()
-
+        senha = "123456786"
         dados_usuario = {
-             "username": nome_usuario,
-             "email": email_usuario,
-             "password": "123456786",
-             "phone": "12345678901",
-             "address": "Rua Aparecida, Centro, São Paulo, SP",
-             "cpf": cpf_usuario
+            "username": nome_usuario,
+            "email": email_usuario,
+            "password": senha,
+            "phone": "12345678901",
+            "address": "Rua Aparecida, Centro, São Paulo, SP",
+            "cpf": cpf_usuario
         }
-
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
-        
         print("\n[Resposta da Criação do Usuário]")
         print(f"Status Code: {resposta.status_code}")
         if resposta.ok:
             print("Usuário criado com sucesso!")
             print(resposta.json())
-            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_usuario)
-            print("\n[Resposta da execução do Login]")
+            # Efetua o login com o mesmo usuário e senha
+            dados_login = {
+                "username": nome_usuario,
+                "password": senha
+            }
+            resposta_login = requests.post(URL_EFETUAR_LOGIN, json=dados_login)
+             # prints para ver durante a apresentação deve ser removido para entrega final.
+            print("\n[Resposta do Login]")
             print(f"Status Code: {resposta_login.status_code}")
-            print(f"ResponseBody: {resposta_login.text}")
+            if resposta_login.ok:
+                print("Login efetuado com sucesso!")
+                print(resposta_login.json())
+                # Salva a resposta da requisição de login em um arquivo JSON
+                with open("login_response.json", "w") as arquivo:
+                    json.dump(resposta_login.json(), arquivo, indent=4)
+             # Validar se houve falha no login
+            else:
+                print("Falha ao efetuar login.")
+                print(resposta_login.json())
         else:
             print("Falha ao criar usuário.")
             print(resposta.json())
