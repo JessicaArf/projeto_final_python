@@ -13,8 +13,8 @@ URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
 URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login/"
 
 # Lista de nomes e sobrenomes
-nomes = ["Lucas", "Maria", "João", "Ana", "Carlos", "Fernanda", "Paulo", "Julia", "Rafael", "Larissa"]
-sobrenomes = ["Silva", "Oliveira", "Santos", "Pereira", "Costa", "Souza", "Almeida", "Rodrigues", "Martins", "Lima"]
+nomes = [ "Lucas", "Maria", "João", "Ana", "Carlos", "Fernanda","Paulo", "Julia", "Rafael", "Larissa", "Bruno", "Beatriz","Gabriel", "Camila", "Vinicius", "Aline", "Thiago", "Patrícia"]
+sobrenomes = [ "Silva", "Oliveira", "Santos", "Pereira", "Costa", "Souza",  "Almeida", "Rodrigues", "Martins", "Lima", "Barbosa", "Gomes", "Araujo", "Ferreira", "Moura", "Rezende", "Rocha", "Nascimento"]
 
 # Função para criar um nome aleatório
 def gerar_nome_usuario():
@@ -25,7 +25,7 @@ def gerar_nome_usuario():
 
 # Função para criar um email aleatório
 def gerar_email(nome_usuario):
-    nome_usuario = nome_usuario.lower()  #deixa tudo em minúsculo
+    nome_usuario = nome_usuario.lower()
     return f"{nome_usuario}@email.com"
 
 # Função para criar um cpf aleatório
