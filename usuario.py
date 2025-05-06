@@ -8,12 +8,11 @@ from dotenv import load_dotenv
 # Carrega variáveis do .env
 load_dotenv()
 
-# Variável do tipo constante pra guardar a url
 URL_CRIAR_USUARIO = "https://desafiopython.jogajuntoinstituto.org/api/users/"
 URL_EFETUAR_LOGIN = "https://desafiopython.jogajuntoinstituto.org/api/users/login/"
 
 # Lista de nomes e sobrenomes
-nomes = [ "Lucas", "Maria", "João", "Ana", "Carlos", "Fernanda","Paulo", "Julia", "Rafael", "Larissa", "Bruno", "Beatriz","Gabriel", "Camila", "Vinicius", "Aline", "Thiago", "Patrícia"]
+nomes = [ "Lucas", "Maria", "Joao", "Ana", "Carlos", "Fernanda","Paulo", "Julia", "Rafael", "Larissa", "Bruno", "Beatriz","Gabriel", "Camila", "Vinicius", "Aline", "Thiago", "Patricia"]
 sobrenomes = [ "Silva", "Oliveira", "Santos", "Pereira", "Costa", "Souza",  "Almeida", "Rodrigues", "Martins", "Lima", "Barbosa", "Gomes", "Araujo", "Ferreira", "Moura", "Rezende", "Rocha", "Nascimento"]
 
 # Função para criar um nome aleatório
@@ -23,7 +22,7 @@ def gerar_nome_usuario():
     numero = random.randint(1, 9999)
     return f"{nome}{sobrenome}{numero}"
 
-# Função para criar um email aleatório
+# Função para criar um email 
 def gerar_email(nome_usuario):
     nome_usuario = nome_usuario.lower()
     return f"{nome_usuario}@email.com"
@@ -52,6 +51,7 @@ def criar_usuario():
         }
 
         resposta = requests.post(URL_CRIAR_USUARIO, json=dados_usuario)
+
         print("\n[Resposta da Criação do Usuário]")
         print(f"Status Code: {resposta.status_code}")
 
@@ -77,10 +77,12 @@ def realizar_login(dados_usuario):
 
         if resposta_login.ok:
             print("Login efetuado com sucesso!")
-            with open("login_response.json", "w") as arquivo:
-                json.dump(resposta_login.json(), arquivo, indent=4)
+            
         else:
-            print("Falha ao efetuar login.")
+            print("Falha ao efetuar loglin.")
+         
+        with open("login_response.json", "w") as arquivo:
+            json.dump(resposta_login.json(), arquivo, indent=4)    
 
     except requests.exceptions.RequestException as e:
         print("Erro ao fazer requisição de login:", e)
